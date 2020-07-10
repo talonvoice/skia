@@ -7,34 +7,6 @@
  * found in the LICENSE file.
  */
 
-#include "include/core/SkTypes.h" // required to make sure SK_SUPPORT_GPU is defined
-
-#define SK_SKIP_ARG__(keep, skip, ...) skip
-#define SK_SKIP_ARG_(args) SK_SKIP_ARG__ args
-#define SK_SKIP_ARG(...) SK_SKIP_ARG_((__VA_ARGS__, ))
-
-#define SK_FIRST_ARG__(keep, skip, ...) keep
-#define SK_FIRST_ARG_(args) SK_FIRST_ARG__ args
-#define SK_FIRST_ARG(...) SK_FIRST_ARG_((__VA_ARGS__, ))
-
-#if SK_SUPPORT_GPU
-#    include "include/gpu/GrContext.h"
-#    include "include/gpu/GrBackendSurface.h"
-#    include "include/gpu/gl/GrGLInterface.h"
-#    include "include/gpu/gl/GrGLAssembleInterface.h"
-#    define SK_ONLY_GPU(...) SK_FIRST_ARG(__VA_ARGS__)
-#    if SK_VULKAN
-#        include "include/gpu/vk/GrVkBackendContext.h"
-#        include "include/gpu/vk/GrVkExtensions.h"
-#        define SK_ONLY_VULKAN(...) SK_FIRST_ARG(__VA_ARGS__)
-#    else
-#        define SK_ONLY_VULKAN(...) SK_SKIP_ARG(__VA_ARGS__)
-#    endif
-#else // !SK_SUPPORT_GPU
-#    define SK_ONLY_GPU(...) SK_SKIP_ARG(__VA_ARGS__)
-#    define SK_ONLY_VULKAN(...) SK_SKIP_ARG(__VA_ARGS__)
-#endif // SK_SUPPORT_GPU
-
 #include "include/c/gr_context.h"
 
 #include "src/c/sk_types_priv.h"
@@ -47,6 +19,10 @@ gr_context_t* gr_context_make_gl(const gr_glinterface_t* glInterface) {
 
 gr_context_t* gr_context_make_vulkan(const gr_vk_backendcontext_t vkBackendContext) {
     return SK_ONLY_VULKAN(ToGrContext(GrContext::MakeVulkan(AsGrVkBackendContext(&vkBackendContext)).release()), nullptr);
+}
+
+gr_context_t* gr_context_make_metal(void* device, void* queue) {
+    return SK_ONLY_METAL(ToGrContext(GrContext::MakeMetal(device, queue).release()), nullptr);
 }
 
 void gr_context_unref(gr_context_t* context) {
@@ -159,6 +135,10 @@ gr_backendtexture_t* gr_backendtexture_new_vulkan(int width, int height, const g
     return SK_ONLY_VULKAN(ToGrBackendTexture(new GrBackendTexture(width, height, *AsGrVkImageInfo(vkInfo))), nullptr);
 }
 
+gr_backendtexture_t* gr_backendtexture_new_metal(int width, int height, bool mipmapped, const gr_mtl_textureinfo_t* mtlInfo) {
+    return SK_ONLY_METAL(ToGrBackendTexture(new GrBackendTexture(width, height, (GrMipMapped)mipmapped, AsGrMtlTextureInfo(mtlInfo))), nullptr);
+}
+
 void gr_backendtexture_delete(gr_backendtexture_t* texture) {
     SK_ONLY_GPU(delete AsGrBackendTexture(texture));
 }
@@ -196,6 +176,10 @@ gr_backendrendertarget_t* gr_backendrendertarget_new_gl(int width, int height, i
 
 gr_backendrendertarget_t* gr_backendrendertarget_new_vulkan(int width, int height, int samples, const gr_vk_imageinfo_t* vkImageInfo) {
     return SK_ONLY_VULKAN(ToGrBackendRenderTarget(new GrBackendRenderTarget(width, height, samples, *AsGrVkImageInfo(vkImageInfo))), nullptr);
+}
+
+gr_backendrendertarget_t* gr_backendrendertarget_new_metal(int width, int height, int samples, const gr_mtl_textureinfo_t* mtlInfo) {
+    return SK_ONLY_METAL(ToGrBackendRenderTarget(new GrBackendRenderTarget(width, height, samples, AsGrMtlTextureInfo(mtlInfo))), nullptr);
 }
 
 void gr_backendrendertarget_delete(gr_backendrendertarget_t* rendertarget) {
