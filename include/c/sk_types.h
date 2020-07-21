@@ -738,7 +738,7 @@ typedef struct vk_physical_device_t vk_physical_device_t;
 typedef struct vk_device_t vk_device_t;
 typedef struct vk_queue_t vk_queue_t;
 
-typedef const void* gr_mtl_handle_t;
+#define gr_mtl_handle_t const void*
 
 typedef struct {
     const void* fTexture;
