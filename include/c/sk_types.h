@@ -66,7 +66,7 @@
 #endif
 
 #ifndef SK_C_INCREMENT
-#define SK_C_INCREMENT 0
+#define SK_C_INCREMENT 3
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -995,6 +995,8 @@ typedef struct {
     float fTX;
     float fTY;
 } sk_rsxform_t;
+
+typedef struct sk_tracememorydump_t sk_tracememorydump_t;
 
 SK_C_PLUS_PLUS_END_GUARD
 

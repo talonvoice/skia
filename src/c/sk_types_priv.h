@@ -29,6 +29,7 @@
 #    include "include/gpu/gl/GrGLAssembleInterface.h"
 #    define SK_ONLY_GPU(...) SK_FIRST_ARG(__VA_ARGS__)
 #    if SK_VULKAN
+#        include "include/gpu/vk/GrVkTypes.h"
 #        include "include/gpu/vk/GrVkBackendContext.h"
 #        include "include/gpu/vk/GrVkExtensions.h"
 #        define SK_ONLY_VULKAN(...) SK_FIRST_ARG(__VA_ARGS__)
@@ -135,6 +136,7 @@ DEF_CLASS_MAP(SkSurface, sk_surface_t, Surface)
 DEF_CLASS_MAP(SkSurfaceProps, sk_surfaceprops_t, SurfaceProps)
 DEF_CLASS_MAP(SkTextBlob, sk_textblob_t, TextBlob)
 DEF_CLASS_MAP(SkTextBlobBuilder, sk_textblob_builder_t, TextBlobBuilder)
+DEF_CLASS_MAP(SkTraceMemoryDump, sk_tracememorydump_t, TraceMemoryDump)
 DEF_CLASS_MAP(SkTypeface, sk_typeface_t, Typeface)
 DEF_CLASS_MAP(SkVertices, sk_vertices_t, Vertices)
 DEF_CLASS_MAP(SkWStream, sk_wstream_t, WStream)
@@ -326,9 +328,6 @@ static inline SkPDF::Metadata AsDocumentPDFMetadata(const sk_document_pdf_metada
         return reinterpret_cast<vk_type*>(t);       \
     }
 
-#include "include/gpu/vk/GrVkTypes.h"
-#include "include/gpu/vk/GrVkBackendContext.h"
-
 DEF_MAP_VK(VkInstance, vk_instance_t);
 DEF_MAP_VK(VkDevice, vk_device_t);
 DEF_MAP_VK(VkPhysicalDevice, vk_physical_device_t);
@@ -337,7 +336,7 @@ DEF_MAP(VkPhysicalDeviceFeatures, vk_physical_device_features_t, VkPhysicalDevic
 DEF_MAP(VkPhysicalDeviceFeatures2, vk_physical_device_features_2_t, VkPhysicalDeviceFeatures2);
 DEF_MAP(GrVkMemoryAllocator, gr_vk_memory_allocator_t, GrVkMemoryAllocator);
 
-static GrVkBackendContext AsGrVkBackendContext(const gr_vk_backendcontext_t* context) {
+static inline GrVkBackendContext AsGrVkBackendContext(const gr_vk_backendcontext_t* context) {
     GrVkBackendContext ctx;
     ctx.fInstance = AsVkInstance(context->fInstance);
     ctx.fPhysicalDevice = AsVkPhysicalDevice(context->fPhysicalDevice);
