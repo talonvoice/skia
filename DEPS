@@ -13,7 +13,7 @@ deps = {
   "third_party/externals/egl-registry"    : "https://skia.googlesource.com/external/github.com/KhronosGroup/EGL-Registry@a0bca08de07c7d7651047bedc0b653cfaaa4f2ae",
   "third_party/externals/expat"           : "https://android.googlesource.com/platform/external/expat.git@9060df1c8101801e0bebcddc13816ae435686019",
   "third_party/externals/freetype"        : "https://skia.googlesource.com/third_party/freetype2.git@0a3d2bb99b45b72e1d45185ab054efa993d97210",
-  "third_party/externals/harfbuzz"        : "https://github.com/harfbuzz/harfbuzz.git@be97e9d678017d4ec66625fa2b17ef3485552cad",
+  "third_party/externals/harfbuzz"        : "https://github.com/harfbuzz/harfbuzz.git@9c98b2b9a9e43669c5e2b37eaa41b1e07de1ede3",
   "third_party/externals/icu"             : "https://chromium.googlesource.com/chromium/deps/icu.git@407b39301e71006b68bd38e770f35d32398a7b14",
   "third_party/externals/imgui"           : "https://skia.googlesource.com/external/github.com/ocornut/imgui.git@d38d7c6628bebd02692cfdd6fa76b4d992a35b75",
   "third_party/externals/libgifcodec"     : "https://skia.googlesource.com/libgifcodec@ed218be1ba3de964c186ceac8e1e344853530edf",
