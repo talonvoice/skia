@@ -363,7 +363,7 @@ config("default") {
       ldflags += [
         "-isysroot",
         xcode_sysroot,
-        "-Wl,macosx_version_min=$min_macos_version",
+        "-Wl,-macosx_version_min,$min_macos_version",
       ]
     }
 
