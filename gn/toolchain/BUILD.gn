@@ -242,7 +242,7 @@ toolchain("msvc") {
 
   tool("copy") {
     cp_py = rebase_path("../cp.py")
-    command = "$shell python \"$cp_py\" {{source}} {{output}}"
+    command = "$shell python3 \"$cp_py\" {{source}} {{output}}"
     description = "copy {{source}} {{output}}"
   }
 }
@@ -312,7 +312,7 @@ template("gcc_like_toolchain") {
         rspfile = "{{output}}.rsp"
         rspfile_content = "{{inputs}}"
         rm_py = rebase_path("../rm.py")
-        command = "$shell python \"$rm_py\" \"{{output}}\" && $ar rcs {{output}} @$rspfile"
+        command = "$shell python3 \"$rm_py\" \"{{output}}\" && $ar rcs {{output}} @$rspfile"
       }
 
       outputs =
