@@ -66,7 +66,8 @@ static GrGLFuncPtr glx_get(void* ctx, const char name[]) {
     return getter->getProc(name);
 }
 
-sk_sp<const GrGLInterface> GrGLMakeGLXInterface() {
+namespace GrGLInterfaces {
+sk_sp<const GrGLInterface> MakeGLX() {
     GLXProcGetter getter;
 
     if (nullptr == getter.getCurrentContext()) {
@@ -75,3 +76,8 @@ sk_sp<const GrGLInterface> GrGLMakeGLXInterface() {
 
     return GrGLMakeAssembledInterface(&getter, glx_get);
 }
+}  // namespace GrGLInterfaces
+
+#if !defined(SK_DISABLE_LEGACY_GLXINTERFACE_FACTORY)
+sk_sp<const GrGLInterface> GrGLMakeGLXInterface() { return GrGLInterfaces::MakeGLX(); }
+#endif
