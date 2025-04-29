@@ -1021,7 +1021,6 @@ optional("gpu") {
         "src/gpu/ganesh/gl/glx/GrGLMakeGLXInterface.cpp",
         "src/gpu/ganesh/gl/glx/GrGLMakeNativeInterface_glx.cpp",
       ]
-      libs += [ "GL" ]
     } else if (is_mac) {
       sources += [ "src/gpu/ganesh/gl/mac/GrGLMakeNativeInterface_mac.cpp" ]
     } else if (is_ios) {
